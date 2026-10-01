@@ -1,0 +1,46 @@
+# CI/CDパイプライン定義ファイル
+name: CI/CD Pipeline Demo
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # ------------------------------------
+  # 1. CI (継続的インテグレーション)
+  # ------------------------------------
+  ci-test:
+    name: 1. CI (Test & Lint)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: コードのチェックアウト
+        uses: actions/checkout@v4
+
+      - name: PHP環境のセットアップ
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: 構文チェック (Lint)
+        run: php -l index.php
+
+      - name: 自動テストの実行
+        run: php test.php
+
+  # ------------------------------------
+  # 2. CD (継続的デリバリー / デプロイ)
+  # ------------------------------------
+  cd-deploy:
+    name: 2. CD (Deploy)
+    needs: ci-test  # ← CIが成功した場合のみ実行される依存関係の設定
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 本番サーバーへのデプロイ（擬似処理）
+        run: |
+          echo "🚀 CI passed! Starting deployment..."
+          echo "📦 Syncing files to Web Server..."
+          echo "✨ Deployment Completed Successfully!"
