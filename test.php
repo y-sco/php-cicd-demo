@@ -2,8 +2,8 @@
 <?php
 require_once __DIR__ . '/index.php';
 
-// 1 + 2 が 4 になるかを検証
-if (sum(1, 2) === 4) {
+// 2 + 2 が 4 になるかを検証
+if (sum(2, 2) === 4) {
     echo "\n✅ Test Passed!\n";
     exit(0); // 成功（終了コード 0）
 } else {
